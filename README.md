@@ -6,7 +6,7 @@ A dual-interface AI chat assistant built with Next.js that features both text-ba
 
 ### Text Chat (Left Panel)
 - Text-based conversation with an AI assistant
-- Real-time responses from OpenRouter API
+- Real-time responses using Meta Llama 3 Maverick model via OpenRouter API
 - Clean, message-bubble interface
 - Loading states and error handling
 
@@ -24,6 +24,7 @@ A dual-interface AI chat assistant built with Next.js that features both text-ba
 - TypeScript for type safety
 - Modern React patterns and hooks
 - Tailwind CSS for styling
+- Netlify deployment ready
 
 ## Tech Stack
 
@@ -34,6 +35,7 @@ A dual-interface AI chat assistant built with Next.js that features both text-ba
 - **Speech-to-Text**: Deepgram API
 - **Text-to-Speech**: Web Speech API (browser native)
 - **HTTP Client**: Axios
+- **Hosting**: Netlify
 
 ## Getting Started
 
@@ -51,9 +53,6 @@ Create a `.env.local` file in the root directory with the following variables:
 ```
 OPENROUTER_API_KEY=your_openrouter_api_key
 DEEPGRAM_API_KEY=your_deepgram_api_key
-NEXTAUTH_SECRET=your_nextauth_secret_key
-NEXTAUTH_URL=http://localhost:3000
-NEXT_PUBLIC_API_URL=http://localhost:3000/api
 ```
 
 ### Installation
@@ -67,15 +66,11 @@ cd aichatbot
 2. Install dependencies:
 ```bash
 npm install
-# or
-yarn install
 ```
 
 3. Run the development server:
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
@@ -98,14 +93,37 @@ aichatbot/
 │   │   ├── TextChat.tsx           # Text chat component
 │   │   ├── VoiceChat.tsx          # Voice chat component
 │   │   └── TabToggle.tsx          # Mobile tab navigation
-│   ├── types/
-│   │   └── index.ts               # TypeScript interfaces
-│   └── utils/
-│       └── speech.ts              # Web Speech API utilities
+│   └── types/
+│       └── index.ts               # TypeScript interfaces
+├── netlify.toml                   # Netlify configuration
 ├── .env.local                     # Environment variables
 ├── package.json
 └── README.md
 ```
+
+## Deployment
+
+This project is configured for deployment on Netlify. To deploy:
+
+1. Install Netlify CLI:
+```bash
+npm install -g netlify-cli
+```
+
+2. Login to Netlify:
+```bash
+netlify login
+```
+
+3. Initialize and deploy:
+```bash
+netlify init
+netlify deploy --prod
+```
+
+4. Set up environment variables in Netlify dashboard:
+- OPENROUTER_API_KEY
+- DEEPGRAM_API_KEY
 
 ## How It Works
 
@@ -162,3 +180,4 @@ The application is fully responsive and optimized for mobile devices:
 - [OpenRouter](https://openrouter.ai/)
 - [Deepgram](https://deepgram.com/)
 - [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API)
+
