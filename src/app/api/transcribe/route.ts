@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Deepgram } from '@deepgram/sdk';
+import { createClient } from '@deepgram/sdk';
 
 export async function POST(req: NextRequest) {
   try {
@@ -13,22 +13,22 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const buffer = Buffer.from(await audioFile.arrayBuffer());
+    // Convert File to Buffer via Uint8Array
+    const arrayBuffer = await audioFile.arrayBuffer();
+    const buffer = Buffer.from(new Uint8Array(arrayBuffer));
     
-    const deepgram = new Deepgram(process.env.DEEPGRAM_API_KEY || '');
+    const deepgram = createClient(process.env.DEEPGRAM_API_KEY || '');
     
-    const response = await deepgram.transcription.preRecorded(
-      {
-        buffer,
-        mimetype: audioFile.type,
-      },
+    const response = await deepgram.listen.prerecorded.transcribeFile(
+      buffer,
       {
         smart_format: true,
         model: 'nova',
+        mimetype: audioFile.type,
       }
     );
 
-    const transcript = response.results?.channels[0]?.alternatives[0]?.transcript || '';
+    const transcript = response.result?.results?.channels[0]?.alternatives[0]?.transcript || '';
     
     return NextResponse.json({ transcript });
   } catch (error) {
@@ -39,3 +39,7 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+
+
+
+
