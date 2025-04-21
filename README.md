@@ -1,36 +1,164 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Chat Assistant - Text & Voice
+
+A dual-interface AI chat assistant built with Next.js that features both text-based and voice-based interaction capabilities.
+
+## Features
+
+### Text Chat (Left Panel)
+- Text-based conversation with an AI assistant
+- Real-time responses from OpenRouter API
+- Clean, message-bubble interface
+- Loading states and error handling
+
+### Voice Chat (Right Panel)
+- Voice input via microphone
+- Speech-to-text using Deepgram API
+- Text-to-speech for AI responses using Web Speech API
+- Visual transcript display
+- Recording status indicators
+
+### Technical Features
+- Responsive design (mobile and desktop optimized)
+- Tab navigation on mobile devices
+- Split-screen layout on desktop
+- TypeScript for type safety
+- Modern React patterns and hooks
+- Tailwind CSS for styling
+
+## Tech Stack
+
+- **Frontend**: Next.js 14 with App Router
+- **Styling**: Tailwind CSS
+- **Language**: TypeScript
+- **AI Integration**: OpenRouter API (Meta Llama 3 Maverick model)
+- **Speech-to-Text**: Deepgram API
+- **Text-to-Speech**: Web Speech API (browser native)
+- **HTTP Client**: Axios
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 18.17.0 or later
+- npm or yarn
+- OpenRouter API key
+- Deepgram API key
+
+### Environment Setup
+
+Create a `.env.local` file in the root directory with the following variables:
+
+```
+OPENROUTER_API_KEY=your_openrouter_api_key
+DEEPGRAM_API_KEY=your_deepgram_api_key
+NEXTAUTH_SECRET=your_nextauth_secret_key
+NEXTAUTH_URL=http://localhost:3000
+NEXT_PUBLIC_API_URL=http://localhost:3000/api
+```
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/aichatbot.git
+cd aichatbot
+```
+
+2. Install dependencies:
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Run the development server:
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+aichatbot/
+├── src/
+│   ├── app/
+│   │   ├── api/
+│   │   │   ├── chat/
+│   │   │   │   └── route.ts       # OpenRouter API integration
+│   │   │   └── transcribe/
+│   │   │       └── route.ts       # Deepgram API integration
+│   │   ├── globals.css            # Global styles
+│   │   ├── layout.tsx             # Root layout
+│   │   └── page.tsx               # Main page with split layout
+│   ├── components/
+│   │   ├── TextChat.tsx           # Text chat component
+│   │   ├── VoiceChat.tsx          # Voice chat component
+│   │   └── TabToggle.tsx          # Mobile tab navigation
+│   ├── types/
+│   │   └── index.ts               # TypeScript interfaces
+│   └── utils/
+│       └── speech.ts              # Web Speech API utilities
+├── .env.local                     # Environment variables
+├── package.json
+└── README.md
+```
 
-## Learn More
+## How It Works
 
-To learn more about Next.js, take a look at the following resources:
+### Text Chat Flow
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. User types a message in the input field
+2. Message is sent to the OpenRouter API via the `/api/chat` endpoint
+3. AI response is displayed in the chat interface
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Voice Chat Flow
 
-## Deploy on Vercel
+1. User clicks the "Start Recording" button
+2. Browser requests microphone access
+3. User speaks into the microphone
+4. When recording is stopped, audio is sent to Deepgram API for transcription
+5. Transcribed text is displayed and sent to OpenRouter API
+6. AI response is displayed in the chat interface and spoken aloud using Web Speech API
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## API Integrations
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### OpenRouter API
+
+The application uses OpenRouter to access the Meta Llama 3 Maverick model. The integration is handled in `src/app/api/chat/route.ts`.
+
+### Deepgram API
+
+Deepgram is used for speech-to-text transcription. The integration is handled in `src/app/api/transcribe/route.ts`.
+
+## Mobile Optimization
+
+The application is fully responsive and optimized for mobile devices:
+
+- Tab navigation for switching between text and voice interfaces
+- Responsive text sizing and spacing
+- Touch-friendly buttons and inputs
+- Proper viewport configuration
+- Conditional display based on screen size
+
+## Browser Compatibility
+
+- The voice chat functionality requires a modern browser that supports:
+  - MediaRecorder API for audio recording
+  - Web Speech API for text-to-speech
+- The text chat functionality works in all modern browsers
+
+## License
+
+[MIT](LICENSE)
+
+## Acknowledgements
+
+- [Next.js](https://nextjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [OpenRouter](https://openrouter.ai/)
+- [Deepgram](https://deepgram.com/)
+- [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API)
